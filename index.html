@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>練習</title>
-    <script>
-        let hensu = "x";
-        let hight = 170;
-        document.write("あなたの身長は" + hight)
-    </script>
-</head>
-<body>
 
-<script>
-    document.write(hensu)
-</script>
+    <meta charset="UTF-8">
+    <title>テトリス制作</title>
+<body>
+<canvas id = "can"></canvas>
+    <script>
+        const block_Size = 30;
+        //ブロックのサイズを決定（ピクセル）
+        const tetro_Size = 4;
+        //テトロミノのサイズを決定
+        let can = document.getElementById("can");
+        let con = can.getContext("2d");
+
+
+        let tetoro = [
+            [0,0,0,0],
+            [1,1,0,0],
+            [0,1,1,0],
+            [0,0,0,0],
+        ];
+
+        for(let y = 0; y<tetro_Size; y++){
+            for(let x = 0; x<tetro_Size; x++){
+                if(tetoro[y][x] == 1){
+
+                    let px = x*block_Size;
+                    let py = y*block_Size;
+
+                    con.fillStyle = "red";
+                    con.fillRect(px,py,block_Size,block_Size);
+                    con.strokeRect(px,py,block_Size,block_Size)
+                }
+            }
+        }
+
+    </script>
+
+
+
 </body>
 </html>
