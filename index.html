@@ -1,41 +1,84 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <meta charset="UTF-8">
-    <title>テトリス制作</title>
+<meta charset="UTF-8">
+<title>テトリス制作</title>
 <body>
 <canvas id = "can"></canvas>
-    <script>
-        const block_Size = 30;
-        //ブロックのサイズを決定（ピクセル）
-        const tetro_Size = 4;
-        //テトロミノのサイズを決定
-        let can = document.getElementById("can");
-        let con = can.getContext("2d");
+<script>
 
+    const field_Col = 10;
+    const field_Row = 20;
+    //フィールドサイズ
 
-        let tetoro = [
-            [0,0,0,0],
-            [1,1,0,0],
-            [0,1,1,0],
-            [0,0,0,0],
-        ];
+    const block_Size = 30;
+    //ブロックのサイズを決定（ピクセル）
 
-        for(let y = 0; y<tetro_Size; y++){
-            for(let x = 0; x<tetro_Size; x++){
-                if(tetoro[y][x] == 1){
+    const screen_w = block_Size * field_Col;
+    const screen_h = block_Size * field_Row;
+    //キャンパスサイズ
 
-                    let px = x*block_Size;
-                    let py = y*block_Size;
+    const tetro_Size = 4;
+    //テトロミノのサイズ
+
+    let can = document.getElementById("can");
+    let con = can.getContext("2d");
+
+    can.width = screen_w;
+    can.height = screen_h;
+    //キャンパスの大きさを定義
+
+    let tetoro = [
+        [0,0,0,0],
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,0,0],
+    ];
+    let tetoro_x = 0;
+    let tetoro_y = 0;
+
+    function drawtetoro() {
+
+        con.clearRect(0,0,screen_w,screen_h)
+
+        for (let y = 0; y < tetro_Size; y++) {
+            for (let x = 0; x < tetro_Size; x++) {
+                if (tetoro[y][x] == 1) {
+
+                    let px = (tetoro_x + x) * block_Size;
+                    let py = (tetoro_y + y) * block_Size;
 
                     con.fillStyle = "red";
-                    con.fillRect(px,py,block_Size,block_Size);
-                    con.strokeRect(px,py,block_Size,block_Size)
+                    con.fillRect(px, py, block_Size, block_Size);
+                    con.strokeRect(px, py, block_Size, block_Size)
                 }
             }
         }
+    }//テトロミノを表示する関数
 
-    </script>
+    drawtetoro()
+
+    document.onkeydown = function(e){
+        switch(e.keyCode){
+            case 37://左
+                tetoro_x--;
+                break;
+            case 38://上
+                tetoro_y--;
+                break;
+            case 39://右
+                tetoro_x++;
+                break;
+            case 40://下
+                tetoro_y++;
+                break;
+            case 32://スペース
+                break;
+        }
+        drawtetoro()
+    }
+
+</script>
 
 
 
