@@ -39,12 +39,13 @@
     let tetoro_y = 0;
 
     let field = [];
-    for (let y = 0; y < field_Row; y++){
+    for (let y = 0; y < field_Row; y++) {
         field[y] = []
-        for (let x = 0; x < field_Col; x++){
+        for (let x = 0; x < field_Col; x++) {
             field[y][x] = 0;
         }
     }
+    //初期化関数
 
     function drawBlock(x,y){
         let px =  x * block_Size;
@@ -55,7 +56,7 @@
         con.stackStyle = "black";
         con.strokeRect(px, py, block_Size, block_Size);
     }
-    //１ブロックを表示
+    //１ブロックを表示する関数
 
     function drawfield() {
 
@@ -63,47 +64,48 @@
 
         for (let y = 0; y < field_Row; y++) {
             for (let x = 0; x < field_Col; x++) {
-                if (field[y][x] == 1) {
+                if (field[y][x]) {
                     drawBlock(x, y)
                 }
             }
         }
     }
     //フィールドを表示する
+
     function drawtetoro() {
 
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
-                if (tetoro[y][x] == 1) {
+                if (tetoro[y][x]) {
                     drawBlock(tetoro_x + x, tetoro_y + y);
                 }
             }
         }
     }
-    //テトロミノを表示する関数
 
     drawfield();
     drawtetoro();
-    document.onkeydown = function(e) {
-        switch (e.keyCode) {
-            case 37://左
-                tetoro_x--;
-                break;
-            case 38://上
+    document.body.addEventListener("keydown",(event) => {
+        switch (event.code) {
+            case "KeyW":
                 tetoro_y--;
                 break;
-            case 39://右
-                tetoro_x++;
-                break;
-            case 40://下
+            case "KeyS":
                 tetoro_y++;
                 break;
-            case 32://スペース
+            case "KeyA":
+                tetoro_x--;
+                break;
+            case "KeyD":
+                tetoro_x++;
                 break;
         }
+
+
+
         drawfield();
         drawtetoro();
-    }
+    });
 
 </script>
 
