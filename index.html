@@ -38,29 +38,54 @@
     let tetoro_x = 0;
     let tetoro_y = 0;
 
-    function drawtetoro() {
+    let field = [];
+    for (let y = 0; y < field_Row; y++){
+        field[y] = []
+        for (let x = 0; x < field_Col; x++){
+            field[y][x] = 0;
+        }
+    }
 
-        con.clearRect(0,0,screen_w,screen_h)
+    function drawBlock(x,y){
+        let px =  x * block_Size;
+        let py =  y * block_Size;
+
+        con.fillStyle = "red";
+        con.fillRect(px, py, block_Size, block_Size);
+        con.stackStyle = "black";
+        con.strokeRect(px, py, block_Size, block_Size);
+    }
+    //１ブロックを表示
+
+    function drawfield() {
+
+        con.clearRect(0, 0, screen_w, screen_h)
+
+        for (let y = 0; y < field_Row; y++) {
+            for (let x = 0; x < field_Col; x++) {
+                if (field[y][x] == 1) {
+                    drawBlock(x, y)
+                }
+            }
+        }
+    }
+    //フィールドを表示する
+    function drawtetoro() {
 
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 if (tetoro[y][x] == 1) {
-
-                    let px = (tetoro_x + x) * block_Size;
-                    let py = (tetoro_y + y) * block_Size;
-
-                    con.fillStyle = "red";
-                    con.fillRect(px, py, block_Size, block_Size);
-                    con.strokeRect(px, py, block_Size, block_Size)
+                    drawBlock(tetoro_x + x, tetoro_y + y);
                 }
             }
         }
-    }//テトロミノを表示する関数
+    }
+    //テトロミノを表示する関数
 
-    drawtetoro()
-
-    document.onkeydown = function(e){
-        switch(e.keyCode){
+    drawfield();
+    drawtetoro();
+    document.onkeydown = function(e) {
+        switch (e.keyCode) {
             case 37://左
                 tetoro_x--;
                 break;
@@ -76,7 +101,8 @@
             case 32://スペース
                 break;
         }
-        drawtetoro()
+        drawfield();
+        drawtetoro();
     }
 
 </script>
