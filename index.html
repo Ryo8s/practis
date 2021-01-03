@@ -97,12 +97,11 @@
                 let nx = tetro_x + mx + x;
                 let ny = tetro_y + my + y;
                 if (new_tetro[y][x]) {
-                    if (field[nx][ny] ||
-                        ny < 0 ||
+                    if (ny < 0 ||
                         nx < 0 ||
                         ny >= field_Row ||
-                        nx >= field_Col
-                    ) {
+                        nx >= field_Col ||
+                        field[nx][ny]) {
                         return false;
                     }
                 }
@@ -137,14 +136,29 @@
         return new_tetro;
     }
 
+    function fixTetro(){
+        for (let y = 0; y < tetro_Size; y++) {
+            for (let x = 0; x < tetro_Size; x++) {
+                if (tetro[y][x]){
+                    field[tetro_y + y][tetro_x + x] = 1;
+                }
+            }
+        }
+    }
+    //テトロミノを固定する関数
     function drop_Tetro(){
         if(check(0,1)){
             tetro_y++;
         }
+        else{
+            fixTetro();
+            tetro_y = 0;
+            tetro_x = 0;
+        }
         drawfield();
         drawtetoro();
     }
-//テトロミノを下す関数
+    //テトロミノを下す関数
     drawfield();
     drawtetoro();
 
