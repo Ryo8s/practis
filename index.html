@@ -7,7 +7,7 @@
 <canvas id = "can"></canvas>
 <script>
 
-    const game_Speed = 1000;
+    const game_Speed = 100;
     //ゲームのスピードを設定
 
     const field_Col = 10;
@@ -138,11 +138,13 @@
     }
 
     function drop_Tetro(){
-        tetro_y++;
+        if(check(0,1)){
+            tetro_y++;
+        }
         drawfield();
         drawtetoro();
     }
-
+//テトロミノを下す関数
     drawfield();
     drawtetoro();
 
