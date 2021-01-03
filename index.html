@@ -83,12 +83,15 @@
         }
     }
 
-    function check (mx,my) {
+    function check (mx,my,new_tetro) {
+        if (new_tetro === undefined){
+            new_tetro = tetro;
+        }
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 let nx = tetro_x + mx + x;
                 let ny = tetro_y + my + y;
-                if (tetro[y][x]) {
+                if (new_tetro[y][x]) {
                     if (field[nx][ny] ||
                         ny < 0 ||
                         nx < 0 ||
@@ -131,6 +134,7 @@
     drawfield();
     drawtetoro();
 
+
     document.body.addEventListener("keydown",(event) => {
         switch (event.code) {
             case "KeyW":
@@ -154,10 +158,16 @@
                 }
                 break;
             case "KeyE":
-                tetro = rotate_R();
+                let new_tetroR = rotate_R()
+                if (check(0,0,new_tetroR)){
+                    tetro = new_tetroR;
+                }
                 break;
-            case"KeyQ":
-                tetro = rotate_L();
+            case　"KeyQ":
+                let new_tetroL = rotate_L();
+                if (check(0,0,new_tetroL)){
+                    tetro = new_tetroL;
+                }
                 break;
         }
 
