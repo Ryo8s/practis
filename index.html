@@ -29,14 +29,14 @@
     can.style.border = "3px solid #555"
     //キャンパスの大きさを定義
 
-    let tetoro = [
+    let tetro = [
         [0,0,0,0],
-        [1,1,0,0],
         [0,1,1,0],
+        [1,1,1,0],
         [0,0,0,0],
     ];
-    let tetoro_x = 0;
-    let tetoro_y = 0;
+    let tetro_x = 0;
+    let tetro_y = 0;
 
     let field = [];
     for (let y = 0; y < field_Row; y++) {
@@ -76,25 +76,25 @@
 
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
-                if (tetoro[y][x]) {
-                    drawBlock(tetoro_x + x, tetoro_y + y);
+                if (tetro[y][x]) {
+                    drawBlock(tetro_x + x, tetro_y + y);
                 }
             }
         }
     }
 
-   function check (mx,my) {
+    function check (mx,my) {
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
-                let nx = tetoro_x + mx + x;
-                let ny = tetoro_y + my + y;
-                if (tetoro[y][x]) {
+                let nx = tetro_x + mx + x;
+                let ny = tetro_y + my + y;
+                if (tetro[y][x]) {
                     if (field[nx][ny] ||
                         ny < 0 ||
                         nx < 0 ||
                         ny >= field_Row ||
                         nx >= field_Col
-                        ) {
+                    ) {
                         return false;
                     }
                 }
@@ -104,31 +104,60 @@
     }
     //あたり判定
 
+    function rotate_R() {
+        let new_tetro = [];
+        for (let y = 0; y < tetro_Size; y++) {
+            new_tetro[y] = [];
+
+            for (let x = 0; x < tetro_Size; x++) {
+                new_tetro[y][x] = tetro[tetro_Size - 1 - x][y];
+            }
+        }
+        return new_tetro;
+    }
+    //右に回転
+
+    function rotate_L(){
+        let new_tetro = [];
+        for (let y = 0; y < tetro_Size; y++) {
+            new_tetro[y] = [];
+
+            for (let x = 0; x < tetro_Size; x++) {
+                new_tetro[y][x] = tetro[x][tetro_Size - 1 - y];
+            }
+        }
+        return new_tetro;
+    }
     drawfield();
     drawtetoro();
-   document.body.addEventListener("keydown",(event) => {
+
+    document.body.addEventListener("keydown",(event) => {
         switch (event.code) {
             case "KeyW":
                 if(check(0,-1)){
-                    tetoro_y--;
+                    tetro_y--;
                 }
                 break;
             case "KeyS":
                 if(check(0,1)){
-                    tetoro_y++;
-               }
+                    tetro_y++;
+                }
                 break;
             case "KeyA":
                 if(check(-1,0)){
-                    tetoro_x--;
+                    tetro_x--;
                 }
                 break;
             case "KeyD":
                 if(check(1,0)){
-                    tetoro_x++;
+                    tetro_x++;
                 }
                 break;
-            case "Space":
+            case "KeyE":
+                tetro = rotate_R();
+                break;
+            case"KeyQ":
+                tetro = rotate_L();
                 break;
         }
 
