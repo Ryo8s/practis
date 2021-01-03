@@ -32,14 +32,55 @@
     can.style.border = "3px solid #555"
     //キャンパスの大きさを定義
 
-    let tetro = [
+    const tetro_Types = [ [
+        [1,0,0,0],
+        [1,0,0,0],
+        [1,0,0,0],
+        [1,0,0,0],
+    ], [
+        [0,1,0,0],
+        [0,1,0,0],
+        [0,1,1,0],
+        [0,0,0,0],
+    ] ,[
+        [0,0,1,0],
+        [0,0,1,0],
+        [0,1,1,0],
+        [0,0,0,0],
+    ], [
         [0,0,0,0],
         [0,1,1,0],
+        [0,1,1,0],
+        [0,0,0,0],
+    ] ,[
+        [0,0,0,0],
+        [0,1,1,0],
+        [1,1,0,0],
+        [0,0,0,0],
+    ] ,[
+        [0,0,0,0],
+        [0,1,0,0],
         [1,1,1,0],
         [0,0,0,0],
-    ];
+    ] ,[
+        [0,0,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [0,0,0,0],
+    ]
+    ]
+
+
+
+
+    let tetro;
+   //テトロミノ本体
     let tetro_x = 0;
     let tetro_y = 0;
+    let new_Tetro;
+    //テトロミノの形を決定
+    new_Tetro = Math.floor(Math.random() * 8)
+    tetro = tetro_Types[new_Tetro];
 
     setInterval(drop_Tetro,game_Speed);
 
@@ -87,6 +128,7 @@
             }
         }
     }
+    //テトロミノを表示する関数
 
     function check (mx,my,new_tetro) {
         if (new_tetro === undefined){
@@ -135,6 +177,7 @@
         }
         return new_tetro;
     }
+    //左に回転
 
     function fixTetro(){
         for (let y = 0; y < tetro_Size; y++) {
@@ -146,6 +189,10 @@
         }
     }
     //テトロミノを固定する関数
+
+
+
+
     function drop_Tetro(){
         if(check(0,1)){
             tetro_y++;
@@ -159,6 +206,7 @@
         drawtetoro();
     }
     //テトロミノを下す関数
+
     drawfield();
     drawtetoro();
 
