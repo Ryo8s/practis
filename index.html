@@ -9,7 +9,7 @@
 
     const field_Col = 10;
     const field_Row = 20;
-    //フィールドサイズ
+    //フィールドサイズ（10*20マス）
 
     const block_Size = 30;
     //ブロックのサイズを決定（ピクセル）
@@ -19,7 +19,7 @@
     //キャンパスサイズ
 
     const tetro_Size = 4;
-    //テトロミノのサイズ
+    //テトロミノのサイズ(4*4マス)
 
     let can = document.getElementById("can");
     let con = can.getContext("2d");
@@ -83,29 +83,60 @@
         }
     }
 
+   function check (mx,my) {
+        for (let y = 0; y < tetro_Size; y++) {
+            for (let x = 0; x < tetro_Size; x++) {
+                let nx = tetoro_x + mx + x;
+                let ny = tetoro_y + my + y;
+                if (tetoro[y][x]) {
+                    if (field[nx][ny] ||
+                        ny < 0 ||
+                        nx < 0 ||
+                        ny >= field_Row ||
+                        nx >= field_Col
+                        ) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    //あたり判定
+
     drawfield();
     drawtetoro();
-    document.body.addEventListener("keydown",(event) => {
+   document.body.addEventListener("keydown",(event) => {
         switch (event.code) {
             case "KeyW":
-                tetoro_y--;
+                if(check(0,-1)){
+                    tetoro_y--;
+                }
                 break;
             case "KeyS":
-                tetoro_y++;
+                if(check(0,1)){
+                    tetoro_y++;
+               }
                 break;
             case "KeyA":
-                tetoro_x--;
+                if(check(-1,0)){
+                    tetoro_x--;
+                }
                 break;
             case "KeyD":
-                tetoro_x++;
+                if(check(1,0)){
+                    tetoro_x++;
+                }
+                break;
+            case "Space":
                 break;
         }
-
-
 
         drawfield();
         drawtetoro();
     });
+
+
 
 </script>
 
