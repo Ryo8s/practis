@@ -48,38 +48,39 @@
         [0,1,1,0],
         [0,0,0,0],
     ], [
+        [0,1,1,0],
+        [0,1,1,0],
         [0,0,0,0],
-        [0,1,1,0],
-        [0,1,1,0],
         [0,0,0,0],
     ] ,[
-        [0,0,0,0],
+        [0,0,1,1],
         [0,1,1,0],
-        [1,1,0,0],
+        [0,0,0,0],
         [0,0,0,0],
     ] ,[
-        [0,0,0,0],
         [0,1,0,0],
         [1,1,1,0],
         [0,0,0,0],
+        [0,0,0,0],
     ] ,[
-        [0,0,0,0],
+        [1,1,0,0],
         [0,1,1,0],
-        [0,0,1,1],
+        [0,0,0,0],
         [0,0,0,0],
     ]
     ]
 
 
 
-
+const start_x = field_Col / 2 - tetro_Size
+    //開始位置の決定
     let tetro;
    //テトロミノ本体
-    let tetro_x = 0;
+    let tetro_x = start_x;
     let tetro_y = 0;
     let new_Tetro;
     //テトロミノの形を決定
-    new_Tetro = Math.floor(Math.random() * 8)
+    new_Tetro = Math.floor(Math.random() * 7)
     tetro = tetro_Types[new_Tetro];
 
     setInterval(drop_Tetro,game_Speed);
@@ -183,15 +184,12 @@
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 if (tetro[y][x]){
-                    field[tetro_y + y][tetro_x + x] = 1;
+                   field[tetro_y + y][tetro_x + x] = 1;
                 }
             }
         }
     }
     //テトロミノを固定する関数
-
-
-
 
     function drop_Tetro(){
         if(check(0,1)){
@@ -199,8 +197,11 @@
         }
         else{
             fixTetro();
+            new_Tetro = Math.floor(Math.random() * 7)
+            tetro = tetro_Types[new_Tetro];
+
             tetro_y = 0;
-            tetro_x = 0;
+            tetro_x = start_x;
         }
         drawfield();
         drawtetoro();
