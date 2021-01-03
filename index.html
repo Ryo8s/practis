@@ -7,6 +7,9 @@
 <canvas id = "can"></canvas>
 <script>
 
+    const game_Speed = 1000;
+    //ゲームのスピードを設定
+
     const field_Col = 10;
     const field_Row = 20;
     //フィールドサイズ（10*20マス）
@@ -37,6 +40,8 @@
     ];
     let tetro_x = 0;
     let tetro_y = 0;
+
+    setInterval(drop_Tetro,game_Speed);
 
     let field = [];
     for (let y = 0; y < field_Row; y++) {
@@ -131,9 +136,15 @@
         }
         return new_tetro;
     }
+
+    function drop_Tetro(){
+        tetro_y++;
+        drawfield();
+        drawtetoro();
+    }
+
     drawfield();
     drawtetoro();
-
 
     document.body.addEventListener("keydown",(event) => {
         switch (event.code) {
