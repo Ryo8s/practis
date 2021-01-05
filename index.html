@@ -87,7 +87,7 @@ const start_x = field_Col / 2 - tetro_Size
 
     let field = [];
     for (let y = 0; y < field_Row; y++) {
-        field[y] = []
+        field[y] = [];
         for (let x = 0; x < field_Col; x++) {
             field[y][x] = 0;
         }
@@ -137,14 +137,14 @@ const start_x = field_Col / 2 - tetro_Size
         }
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
-                let nx = tetro_x + mx + x;
                 let ny = tetro_y + my + y;
+                let nx = tetro_x + mx + x;
                 if (new_tetro[y][x]) {
                     if (ny < 0 ||
                         nx < 0 ||
                         ny >= field_Row ||
                         nx >= field_Col ||
-                        field[nx][ny]) {
+                        field[ny][nx]) {
                         return false;
                     }
                 }
@@ -192,7 +192,7 @@ const start_x = field_Col / 2 - tetro_Size
     //テトロミノを固定する関数
 
     function drop_Tetro(){
-        if(check(0,1)){
+        if(check(0,1)) {
             tetro_y++;
         }
         else{
@@ -207,9 +207,6 @@ const start_x = field_Col / 2 - tetro_Size
         drawtetoro();
     }
     //テトロミノを下す関数
-
-    drawfield();
-    drawtetoro();
 
     document.body.addEventListener("keydown",(event) => {
         switch (event.code) {
