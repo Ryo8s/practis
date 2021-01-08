@@ -7,7 +7,7 @@
 <canvas id = "can"></canvas>
 <script>
 
-    const game_Speed = 100;
+    const game_Speed = 500;
     //ゲームのスピードを設定
 
     const field_Col = 10;
@@ -32,7 +32,20 @@
     can.style.border = "3px solid #555"
     //キャンパスの大きさを定義
 
-    const tetro_Types = [ [
+    const tetro_colors = [
+        "",
+        "#6CF",
+        "#F92",
+        "#66F",
+        "#C5C",
+        "#FD2",
+        "#F44",
+        "#5B5"
+    ]
+    //テトロミノの色
+
+    const tetro_Types = [
+        [
         [1,0,0,0],
         [1,0,0,0],
         [1,0,0,0],
@@ -74,16 +87,21 @@
 
 const start_x = field_Col / 2 - tetro_Size
     //開始位置の決定
+
     let tetro;
    //テトロミノ本体
+
     let tetro_x = start_x;
     let tetro_y = 0;
+//テトロミノの開始位置
+
     let new_Tetro;
-    //テトロミノの形を決定
     new_Tetro = Math.floor(Math.random() * 7)
     tetro = tetro_Types[new_Tetro];
+//テトロミノの形を決定
 
     setInterval(drop_Tetro,game_Speed);
+//落下速度の決定
 
     let field = [];
     for (let y = 0; y < field_Row; y++) {
@@ -94,11 +112,11 @@ const start_x = field_Col / 2 - tetro_Size
     }
     //初期化関数
 
-    function drawBlock(x,y){
+    function drawBlock(x,y,c){
         let px =  x * block_Size;
         let py =  y * block_Size;
 
-        con.fillStyle = "red";
+        con.fillStyle = tetro_colors[c];
         con.fillRect(px, py, block_Size, block_Size);
         con.stackStyle = "black";
         con.strokeRect(px, py, block_Size, block_Size);
@@ -112,7 +130,7 @@ const start_x = field_Col / 2 - tetro_Size
         for (let y = 0; y < field_Row; y++) {
             for (let x = 0; x < field_Col; x++) {
                 if (field[y][x]) {
-                    drawBlock(x, y)
+                    drawBlock(x, y, field[y][x]);
                 }
             }
         }
@@ -124,7 +142,7 @@ const start_x = field_Col / 2 - tetro_Size
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 if (tetro[y][x]) {
-                    drawBlock(tetro_x + x, tetro_y + y);
+                    drawBlock(tetro_x + x, tetro_y + y, new_Tetro + 1);
                 }
             }
         }
@@ -184,7 +202,7 @@ const start_x = field_Col / 2 - tetro_Size
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 if (tetro[y][x]){
-                   field[tetro_y + y][tetro_x + x] = 1;
+                   field[tetro_y + y][tetro_x + x] = new_Tetro + 1;
                 }
             }
         }
