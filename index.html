@@ -46,62 +46,62 @@
 
     const tetro_Types = [
         [
-        [1,0,0,0],
-        [1,0,0,0],
-        [1,0,0,0],
-        [1,0,0,0],
-    ], [
-        [0,1,0,0],
-        [0,1,0,0],
-        [0,1,1,0],
-        [0,0,0,0],
-    ] ,[
-        [0,0,1,0],
-        [0,0,1,0],
-        [0,1,1,0],
-        [0,0,0,0],
-    ], [
-        [0,1,1,0],
-        [0,1,1,0],
-        [0,0,0,0],
-        [0,0,0,0],
-    ] ,[
-        [0,0,1,1],
-        [0,1,1,0],
-        [0,0,0,0],
-        [0,0,0,0],
-    ] ,[
-        [0,1,0,0],
-        [1,1,1,0],
-        [0,0,0,0],
-        [0,0,0,0],
-    ] ,[
-        [1,1,0,0],
-        [0,1,1,0],
-        [0,0,0,0],
-        [0,0,0,0],
+            [1,0,0,0],
+            [1,0,0,0],
+            [1,0,0,0],
+            [1,0,0,0],
+        ], [
+            [0,1,0,0],
+            [0,1,0,0],
+            [0,1,1,0],
+            [0,0,0,0],
+        ] ,[
+            [0,0,1,0],
+            [0,0,1,0],
+            [0,1,1,0],
+            [0,0,0,0],
+        ], [
+            [0,1,1,0],
+            [0,1,1,0],
+            [0,0,0,0],
+            [0,0,0,0],
+        ] ,[
+            [0,0,1,1],
+            [0,1,1,0],
+            [0,0,0,0],
+            [0,0,0,0],
+        ] ,[
+            [0,1,0,0],
+            [1,1,1,0],
+            [0,0,0,0],
+            [0,0,0,0],
+        ] ,[
+            [1,1,0,0],
+            [0,1,1,0],
+            [0,0,0,0],
+            [0,0,0,0],
+        ]
     ]
-    ]
 
 
 
-const start_x = field_Col / 2 - tetro_Size
+    const start_x = field_Col / 2 - tetro_Size
     //開始位置の決定
 
     let tetro;
-   //テトロミノ本体
+    //テトロミノ本体
 
     let tetro_x = start_x;
     let tetro_y = 0;
-//テトロミノの開始位置
+    //テトロミノの開始位置
 
     let new_Tetro;
     new_Tetro = Math.floor(Math.random() * 7)
     tetro = tetro_Types[new_Tetro];
-//テトロミノの形を決定
+    //テトロミノの形を決定
 
     setInterval(drop_Tetro,game_Speed);
-//落下速度の決定
+    //落下速度の決定
 
     let field = [];
     for (let y = 0; y < field_Row; y++) {
@@ -202,12 +202,35 @@ const start_x = field_Col / 2 - tetro_Size
         for (let y = 0; y < tetro_Size; y++) {
             for (let x = 0; x < tetro_Size; x++) {
                 if (tetro[y][x]){
-                   field[tetro_y + y][tetro_x + x] = new_Tetro + 1;
+                    field[tetro_y + y][tetro_x + x] = new_Tetro + 1;
                 }
             }
         }
     }
     //テトロミノを固定する関数
+
+    function erase_Line(){
+        let line = 0;
+        for (let y = 0; y < field_Row; y++) {
+            let flag = true;
+            for (let x = 0; x < field_Col; x++){
+                if (!field[y][x]){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                line++;
+
+                for (let ny = y; ny > 0; ny--){
+                    for (let nx = 0; nx < field_Col; nx++){
+                        field[ny][nx] = field[ny - 1][nx];
+                    }
+                }
+            }
+        }
+    }
+//１行出来たら消す関数
 
     function drop_Tetro(){
         if(check(0,1)) {
@@ -215,6 +238,7 @@ const start_x = field_Col / 2 - tetro_Size
         }
         else{
             fixTetro();
+            erase_Line();
             new_Tetro = Math.floor(Math.random() * 7)
             tetro = tetro_Types[new_Tetro];
 
