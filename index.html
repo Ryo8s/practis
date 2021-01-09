@@ -112,6 +112,8 @@
     }
     //初期化関数
 
+    let over = false;
+
     function drawBlock(x,y,c){
         let px =  x * block_Size;
         let py =  y * block_Size;
@@ -148,6 +150,20 @@
         }
     }
     //テトロミノを表示する関数
+
+    function game_over(){
+        if (over){
+            let s = "GAME OVER";
+            con.font = "40px 'MSゴシック'";
+            let w = con.measureText(s).width;
+            let x = screen_w/2 - w/2;
+            let y = screen_h/2 - 20;
+            con.lineWidth = 4;
+            con.strokeText(s,x,y);
+            con.fillStyle = "white";
+            con.fillText(s,x,y);
+        }
+    }
 
     function check (mx,my,new_tetro) {
         if (new_tetro === undefined){
@@ -233,6 +249,9 @@
 //１行出来たら消す関数
 
     function drop_Tetro(){
+
+        if (over)return;
+
         if(check(0,1)) {
             tetro_y++;
         }
@@ -244,13 +263,19 @@
 
             tetro_y = 0;
             tetro_x = start_x;
+
+            if (!check(0,0)){
+                over = true;
+            }
         }
         drawfield();
         drawtetoro();
+        game_over();
     }
     //テトロミノを下す関数
 
     document.body.addEventListener("keydown",(event) => {
+        if (over)return;
         switch (event.code) {
             case "KeyW":
                 if(check(0,-1)){
