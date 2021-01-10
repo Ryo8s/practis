@@ -113,7 +113,7 @@
     //初期化関数
 
     let over = false;
-
+    let score = 0;
     function drawBlock(x,y,c){
         let px =  x * block_Size;
         let py =  y * block_Size;
@@ -154,14 +154,19 @@
     function game_over(){
         if (over){
             let s = "GAME OVER";
+            let a = "スコア:" + score;
             con.font = "40px 'MSゴシック'";
-            let w = con.measureText(s).width;
-            let x = screen_w/2 - w/2;
+            let sw = con.measureText(s).width;
+            let aw = con.measureText(a).width;
+            let sx = screen_w/2 - sw/2;
+            let ax = screen_w/2 - aw/2;
             let y = screen_h/2 - 20;
             con.lineWidth = 4;
-            con.strokeText(s,x,y);
+            con.strokeText(s,sx,y);
+            con.strokeText(a,ax,y+40);
             con.fillStyle = "white";
-            con.fillText(s,x,y);
+            con.fillText(s,sx,y);
+            con.fillText(a,ax,y+40);
         }
     }
 
@@ -227,6 +232,8 @@
 
     function erase_Line(){
         let line = 0;
+        let L_bonus = 0;
+        let S_bonus = 0;
         for (let y = 0; y < field_Row; y++) {
             let flag = true;
             for (let x = 0; x < field_Col; x++){
@@ -237,6 +244,14 @@
             }
             if (flag){
                 line++;
+                if (line >= 5 && line < 10){
+                    L_bonus = 3
+                }
+                else if (line >= 10){
+                    L_bonus = 5
+                    S_bonus = Math.floor(Math.random()*10 + 1)
+                }
+                score = score + (line*(10+S_bonus)) + (line*L_bonus)
 
                 for (let ny = y; ny > 0; ny--){
                     for (let nx = 0; nx < field_Col; nx++){
