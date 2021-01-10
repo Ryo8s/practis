@@ -246,7 +246,7 @@
             }
         }
     }
-//１行出来たら消す関数
+    //１行出来たら消す関数
 
     function drop_Tetro(){
 
@@ -277,11 +277,6 @@
     document.body.addEventListener("keydown",(event) => {
         if (over)return;
         switch (event.code) {
-            case "KeyW":
-                if(check(0,-1)){
-                    tetro_y--;
-                }
-                break;
             case "KeyS":
                 if(check(0,1)){
                     tetro_y++;
@@ -308,6 +303,15 @@
                 if (check(0,0,new_tetroL)){
                     tetro = new_tetroL;
                 }
+                break;
+            case"Space":
+                let drop = 0;
+                for (let y = tetro_y; y < field_Row; y++){
+                    if (check(0,y)){
+                        drop = y
+                    }
+                }
+                tetro_y = tetro_y + drop;
                 break;
         }
 
